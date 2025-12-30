@@ -6,10 +6,10 @@ import { CDN_BASE_URL, BODY_PARTS, type BodyPart } from './constants';
 export function getAssetUrl(
   characterFolder: string,
   partName: string,
-  resolution: '1x' | '2x' | '3x' = '2x'
+  _resolution: '1x' | '2x' | '3x' = '1x'
 ): string {
-  const suffix = resolution === '1x' ? '' : `@${resolution}`;
-  return `${CDN_BASE_URL}/${characterFolder}/${partName}${suffix}.png`;
+  // Currently using single resolution assets (no @2x/@3x suffix)
+  return `${CDN_BASE_URL}/${characterFolder}/${partName}.png`;
 }
 
 /**
