@@ -27,6 +27,7 @@ export async function fetchImageBytes(url: string): Promise<Uint8Array> {
     headers: {
       Accept: 'image/png,image/webp,image/jpeg,*/*',
     },
+    cache: 'no-store',
   });
 
   if (!response.ok) {
