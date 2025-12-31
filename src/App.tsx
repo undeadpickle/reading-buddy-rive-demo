@@ -1,55 +1,7 @@
 import { useState, useRef } from 'react';
-import { BuddyCanvas } from './components/BuddyCanvas';
-import { useBuddyRive } from './hooks/useBuddyRive';
+import { BuddyCanvas, BuddyCanvasRef } from './components/BuddyCanvas';
 import { CHARACTERS } from './utils/constants';
 import type { BuddyCharacter } from './types/buddy';
-
-function AnimationControls({
-  character,
-  canvasKey,
-}: {
-  character: BuddyCharacter;
-  canvasKey: number;
-}) {
-  const { triggerTap, triggerWave, triggerJump, triggerBlink, state } =
-    useBuddyRive({
-      character,
-      autoplay: false,
-    });
-
-  return (
-    <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap' }}>
-      <button
-        onClick={triggerTap}
-        disabled={!state.isLoaded}
-        style={buttonStyle}
-      >
-        Tap
-      </button>
-      <button
-        onClick={triggerWave}
-        disabled={!state.isLoaded}
-        style={buttonStyle}
-      >
-        Wave
-      </button>
-      <button
-        onClick={triggerJump}
-        disabled={!state.isLoaded}
-        style={buttonStyle}
-      >
-        Jump
-      </button>
-      <button
-        onClick={triggerBlink}
-        disabled={!state.isLoaded}
-        style={buttonStyle}
-      >
-        Blink
-      </button>
-    </div>
-  );
-}
 
 const buttonStyle: React.CSSProperties = {
   padding: '8px 16px',
@@ -66,6 +18,7 @@ export default function App() {
   );
   const [key, setKey] = useState(0); // Used to force re-mount on character change
   const [loadStatus, setLoadStatus] = useState<string>('');
+  const buddyRef = useRef<BuddyCanvasRef>(null);
 
   const handleCharacterChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const character = CHARACTERS.find((c) => c.id === e.target.value);
@@ -125,6 +78,7 @@ export default function App() {
           }}
         >
           <BuddyCanvas
+            ref={buddyRef}
             key={key}
             character={selectedCharacter}
             width={300}
@@ -162,10 +116,10 @@ export default function App() {
           the BuddyStateMachine state machine.
         </p>
         <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap' }}>
-          <button style={buttonStyle}>Tap</button>
-          <button style={buttonStyle}>Wave</button>
-          <button style={buttonStyle}>Jump</button>
-          <button style={buttonStyle}>Blink</button>
+          <button style={buttonStyle} onClick={() => buddyRef.current?.triggerTap()}>Tap</button>
+          <button style={buttonStyle} onClick={() => buddyRef.current?.triggerWave()}>Wave</button>
+          <button style={buttonStyle} onClick={() => buddyRef.current?.triggerJump()}>Jump</button>
+          <button style={buttonStyle} onClick={() => buddyRef.current?.triggerBlink()}>Blink</button>
         </div>
       </section>
 

@@ -1,3 +1,4 @@
+import { forwardRef, useImperativeHandle } from 'react';
 import { useBuddyRive } from '../hooks/useBuddyRive';
 import type { BuddyCharacter } from '../types/buddy';
 
@@ -10,20 +11,32 @@ interface BuddyCanvasProps {
   onError?: (error: Error) => void;
 }
 
-export function BuddyCanvas({
-  character,
-  width = 300,
-  height = 300,
-  onTap,
-  onLoad,
-  onError,
-}: BuddyCanvasProps) {
-  const { RiveComponent, state, triggerTap } = useBuddyRive({
-    character,
-    resolution: '2x',
-    onLoad,
-    onError,
-  });
+export interface BuddyCanvasRef {
+  triggerTap: () => void;
+  triggerWave: () => void;
+  triggerJump: () => void;
+  triggerBlink: () => void;
+}
+
+export const BuddyCanvas = forwardRef<BuddyCanvasRef, BuddyCanvasProps>(
+  function BuddyCanvas(
+    { character, width = 300, height = 300, onTap, onLoad, onError },
+    ref
+  ) {
+    const { RiveComponent, state, triggerTap, triggerWave, triggerJump, triggerBlink } =
+      useBuddyRive({
+        character,
+        resolution: '2x',
+        onLoad,
+        onError,
+      });
+
+    useImperativeHandle(ref, () => ({
+      triggerTap,
+      triggerWave,
+      triggerJump,
+      triggerBlink,
+    }));
 
   const handleClick = () => {
     triggerTap();
@@ -57,4 +70,5 @@ export function BuddyCanvas({
       <RiveComponent />
     </div>
   );
-}
+  }
+);

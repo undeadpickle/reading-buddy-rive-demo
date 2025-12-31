@@ -109,15 +109,23 @@ export function useBuddyRive({
   // Fire a trigger input
   const fireTrigger = useCallback(
     (triggerName: string) => {
+      console.log(`Attempting to fire trigger: ${triggerName}`);
       const inputs = getInputs();
-      if (!inputs) return;
+      if (!inputs) {
+        console.log('No inputs found - rive not ready');
+        return;
+      }
+      console.log('Available inputs:', inputs.map((i: { name: string }) => i.name));
 
       const trigger = inputs.find(
         (input: { name: string }) => input.name === triggerName
       );
       if (trigger && 'fire' in trigger) {
+        console.log(`Firing trigger: ${triggerName}`);
         (trigger as { fire: () => void }).fire();
         setState((prev) => ({ ...prev, currentAnimation: triggerName }));
+      } else {
+        console.log(`Trigger '${triggerName}' not found or has no fire method`);
       }
     },
     [getInputs]
