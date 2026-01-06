@@ -1,5 +1,6 @@
 import { useState, useRef } from 'react';
-import { BuddyCanvas, BuddyCanvasRef } from './components/BuddyCanvas';
+import { BuddyLoader, BuddyLoaderRef } from './components/BuddyLoader';
+import { EventsDemo } from './components/EventsDemo';
 import { CHARACTERS } from './utils/constants';
 import type { BuddyCharacter } from './types/buddy';
 
@@ -18,7 +19,7 @@ export default function App() {
   );
   const [key, setKey] = useState(0); // Used to force re-mount on character change
   const [loadStatus, setLoadStatus] = useState<string>('');
-  const buddyRef = useRef<BuddyCanvasRef>(null);
+  const buddyRef = useRef<BuddyLoaderRef>(null);
 
   const handleCharacterChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const character = CHARACTERS.find((c) => c.id === e.target.value);
@@ -77,7 +78,7 @@ export default function App() {
             background: '#f9f9f9',
           }}
         >
-          <BuddyCanvas
+          <BuddyLoader
             ref={buddyRef}
             key={key}
             character={selectedCharacter}
@@ -120,6 +121,10 @@ export default function App() {
           <button style={buttonStyle} onClick={() => buddyRef.current?.triggerJump()}>Jump</button>
           <button style={buttonStyle} onClick={() => buddyRef.current?.triggerBlink()}>Blink</button>
         </div>
+      </section>
+
+      <section style={{ marginBottom: 24 }}>
+        <EventsDemo buddyRef={buddyRef} />
       </section>
 
       <section

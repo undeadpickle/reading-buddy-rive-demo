@@ -1,6 +1,6 @@
 import { useCallback, useState } from 'react';
 import { useRive, decodeImage } from '@rive-app/react-canvas';
-import type { ImageAsset } from '@rive-app/react-canvas';
+import type { FileAsset, ImageAsset } from '@rive-app/react-canvas';
 import { getAssetUrl, isBodyPart, fetchImageBytes } from '../utils/assetLoader';
 import { STATE_MACHINE_NAME, TRIGGERS, BODY_PARTS } from '../utils/constants';
 import type { BuddyCharacter, BuddyState } from '../types/buddy';
@@ -9,6 +9,8 @@ interface UseBuddyRiveOptions {
   character: BuddyCharacter;
   resolution?: '1x' | '2x' | '3x';
   autoplay?: boolean;
+  assetCache?: Map<string, Uint8Array>;
+  onAllAssetsLoaded?: () => void;
   onLoad?: () => void;
   onError?: (error: Error) => void;
 }
@@ -27,6 +29,8 @@ export function useBuddyRive({
   character,
   resolution = '2x',
   autoplay = true,
+  assetCache,
+  onAllAssetsLoaded,
   onLoad,
   onError,
 }: UseBuddyRiveOptions): UseBuddyRiveReturn {
@@ -40,7 +44,7 @@ export function useBuddyRive({
 
   // Asset loader callback - handles loading images from CDN
   const assetLoader = useCallback(
-    async (asset: ImageAsset, bytes: Uint8Array): Promise<boolean> => {
+    async (asset: FileAsset, bytes: Uint8Array): Promise<boolean> => {
       // If asset is already embedded or hosted on Rive CDN, let runtime handle it
       if (bytes.length > 0 || (asset.cdnUuid && asset.cdnUuid.length > 0)) {
         return false;
@@ -56,23 +60,37 @@ export function useBuddyRive({
       // Check if this is a body part we need to load
       if (isBodyPart(assetName)) {
         try {
-          const url = getAssetUrl(character.folderName, assetName, resolution);
-          console.log(`Loading asset: ${assetName} from ${url}`);
+          let imageBytes: Uint8Array;
 
-          const imageBytes = await fetchImageBytes(url);
+          // Use cache if available, otherwise fetch
+          if (assetCache?.has(assetName)) {
+            imageBytes = assetCache.get(assetName)!;
+            console.log(`Using cached asset: ${assetName}`);
+          } else {
+            const url = getAssetUrl(character.folderName, assetName, resolution);
+            console.log(`Fetching asset: ${assetName} from ${url}`);
+            imageBytes = await fetchImageBytes(url);
+          }
+
           const image = await decodeImage(imageBytes);
 
-          // Set the image on the asset
-          asset.setRenderImage(image);
+          // Set the image on the asset (cast to ImageAsset since we checked isImage)
+          (asset as ImageAsset).setRenderImage(image);
 
           // Clean up to prevent memory leak
           image.unref();
 
-          // Update loading state
-          setState((prev) => ({
-            ...prev,
-            assetsLoaded: prev.assetsLoaded + 1,
-          }));
+          // Update loading state and check if all assets are loaded
+          setState((prev) => {
+            const newCount = prev.assetsLoaded + 1;
+            if (newCount === prev.totalAssets) {
+              onAllAssetsLoaded?.();
+            }
+            return {
+              ...prev,
+              assetsLoaded: newCount,
+            };
+          });
 
           return true; // We handled this asset
         } catch (error) {
@@ -84,15 +102,16 @@ export function useBuddyRive({
 
       return false; // Let runtime handle unknown assets
     },
-    [character.folderName, resolution, onError]
+    [character.folderName, resolution, assetCache, onAllAssetsLoaded, onError]
   );
 
   // Initialize Rive
+  // Note: assetLoader is typed as async but Rive runtime handles it correctly
   const { rive, RiveComponent } = useRive({
     src: '/buddy-template.riv',
     stateMachines: STATE_MACHINE_NAME,
     autoplay,
-    assetLoader,
+    assetLoader: assetLoader as unknown as (asset: FileAsset, bytes: Uint8Array) => boolean,
     onLoad: () => {
       setState((prev) => ({ ...prev, isLoaded: true, isPlaying: autoplay }));
       onLoad?.();

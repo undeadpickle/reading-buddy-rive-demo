@@ -44,3 +44,13 @@ export const TRIGGERS = {
   JUMP: 'jump',
   BLINK: 'blink',
 } as const;
+
+// Future state machine inputs (prepared for Rive updates)
+// These inputs will work once added to the BuddyStateMachine in Rive
+export const INPUTS = {
+  IS_READING: 'isReading',
+  EXCITEMENT_LEVEL: 'excitementLevel',
+} as const;
+
+// Timer milestones (in simulated minutes)
+export const READING_MILESTONES = [5, 10, 15, 20] as const;

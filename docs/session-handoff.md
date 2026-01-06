@@ -1,17 +1,13 @@
-# 🚀 Project Kickoff: Rive State Machine Configuration Complete
+# 🚀 Project Kickoff: Phase 1 Complete - Asset Preloader & Events Demo
 
-Generated: January 1, 2026
-Previous Session Summary: Configured idle as default state, implemented automatic blinking, fixed all animation triggers, removed unused tap code
+Generated: January 5, 2026
+Previous Session Summary
 
 ⸻
 
 ## 🎯 Mission for Next Session
 
-With the core animation system now fully functional, the next session should focus on:
-1. Committing all the animation improvements
-2. Testing edge cases and rapid transitions
-3. Beginning Phase 2: Accessories system or improving animation quality
-4. Adding visual feedback for button states during animations
+Phase 2: Accessories System - Add hats, glasses, masks, and other accessories that can be equipped on the Reading Buddy. Build on the existing CDN asset loading pattern to dynamically load and layer accessories.
 
 ⸻
 
@@ -19,20 +15,17 @@ With the core animation system now fully functional, the next session should foc
 
 ✅ **Completed in This Session:**
 
-- **Idle as Default State**: Configured Entry → idle transition in BodyLayer
-- **Automatic Blinking**: Set up BlinkLayer with eyes_open → blink loop (2-5s delay)
-- **Wave Animation**: Returns to idle with Exit Time 100%
-- **Jump Animation**: Fixed trigger condition and returns to idle
-- **Code Cleanup**: Removed unused TAP trigger from all TypeScript files
-- **State Machine Architecture**: Two-layer system (BodyLayer + BlinkLayer) for parallel animations
-- **Documentation**: Created detailed plan with ASCII diagrams and Rive terminology
+- **Asset Preloader**: BuddyLoader component prevents body parts from "popping in" one by one
+- **Loading Spinner**: Simple CSS spinner with 250ms delay to prevent flicker on fast networks
+- **Events Demo**: Comprehensive event simulation system for testing buddy reactions to app events
+- **Dark Background Fix**: Documented solution for Rive artboard background transparency
+- **Spinner Delay**: Added intelligent delay to only show spinner on slow connections
 
 👉 **Next Priority:**
 
-- Commit all changes (6 modified files pending)
-- Add visual feedback to buttons during animations
-- Test rapid button clicking and edge cases
-- Consider Phase 2 features (accessories, egg hatching)
+- Phase 2: Implement accessories system (hats, glasses, masks)
+- Consider egg hatching animation
+- Prepare for production CDN migration
 
 ⸻
 
@@ -40,30 +33,30 @@ With the core animation system now fully functional, the next session should foc
 
 ### What Worked Well
 
-- **ASCII Diagrams**: Visual representation of state machine architecture greatly clarified the setup
-- **Layer Architecture**: Using separate layers for body movements and blinking enables parallel animations
-- **Exit Time 100%**: Critical setting that prevents infinite transition loops
-- **Plan Mode**: Creating a detailed plan before implementation saved time and confusion
+- **Asset Preloading Pattern**: Using `preloadCharacterAssets()` to fetch all images in parallel before mounting Rive eliminated the jarring "pop-in" effect
+- **ForwardRef Pattern**: BuddyLoader properly forwards all ref methods to inner BuddyCanvas, maintaining clean component API
+- **Spinner Delay Logic**: 250ms threshold prevents spinner flicker on fast networks while still providing feedback on slow connections
+- **Event Mappings Architecture**: Clean separation of event definitions, categories, and buddy responses in EventsDemo
 
 ### Edge Cases & Failures Encountered
 
-- **Infinite Loop Bug**: Wave animation kept firing continuously because transition lacked Exit Time
-- **Missing Trigger Condition**: Jump button fired but animation didn't play - transition condition wasn't set to "jump"
-- **Duplicate States**: BlinkLayer had two eyes_open states creating a linear chain instead of a loop
-- **MCP Connection Failed**: Rive Editor MCP connection timed out, proceeded with manual instructions
+- **Asset Count Mismatch**: Expected 13 body parts but Rive only requested 12 - `legSeparator` wasn't in the .riv file. Solution: Use Rive's `onLoad` callback instead of counting assets
+- **React StrictMode Double Mount**: "Buddy loaded!" fired twice in dev mode. This is expected behavior, not a bug
+- **Dark Artboard Background**: Rive artboard had default dark fill. Solution: Set artboard fill to transparent in Rive editor
+- **Type Safety with Rive**: Had to cast `asset as ImageAsset` because Rive's TypeScript types don't narrow properly after `isImage` check
 
 ### Wrong Assumptions
 
-- **Random Delays in Rive**: Assumed Rive supported random transition delays natively - it doesn't, must use fixed duration timelines
-- **View Models Needed**: User asked about View Models but they're for data binding, not needed for trigger-based animations
-- **Layer Deletion Required**: Initially planned to delete and recreate layers, but renaming/reconfiguring existing ones was more efficient
+- **Asset Count Reliability**: Assumed BODY_PARTS array would match actual assets in .riv file - not always true
+- **Loading Timing**: Initially thought spinner should show immediately, but UX is better with delay threshold
+- **onAllAssetsLoaded Callback**: Assumed we needed to track asset loading manually, but Rive's `onLoad` is sufficient
 
 ### Documentation Updated
 
-- [x] Plan file created with full Rive terminology reference
-- [x] ASCII state machine diagrams documented
-- [ ] CLAUDE.md needs update: Remove tap trigger from documentation
-- [ ] RIVE_EDITOR_SETUP.md needs update: Add layer architecture pattern
+- [x] CLAUDE.md updated with: Asset preloader pattern
+- [x] Plan document created: greedy-brewing-wadler.md with full preloader implementation
+- [ ] Still needs: Update TECHNICAL_SPEC.md with Events Demo architecture
+- [ ] Still needs: Add preloader pattern to IMPLEMENTATION_PHASES.md
 
 ⸻
 
@@ -71,88 +64,71 @@ With the core animation system now fully functional, the next session should foc
 
 ### What Exists Now:
 
-• **Complete Animation System**: All animations (idle, blink, wave, jump) working correctly
-• **Two-Layer Architecture**: BodyLayer for movements, BlinkLayer for eye animations
-• **Clean Trigger API**: Wave, jump, and blink triggers exposed via forwardRef
-• **5 Character Support**: All characters loading from CDN and animating properly
-• **Debug Infrastructure**: Console logging for troubleshooting (needs removal)
+• **Core Animation System**: Complete Rive integration with CDN asset loading
+• **Asset Preloader**: BuddyLoader component with intelligent loading states
+• **Events Demo**: Full event simulation system for testing buddy reactions
+• **Character Switching**: Dropdown to swap between 5 different buddy characters
+• **State Machine**: Two-layer architecture (BodyLayer + BlinkLayer) for independent animations
+• **Animation Triggers**: Wave, jump, blink animations working with proper state returns
 
 ### Technology Stack:
 
-• Frontend: React 18.3 + TypeScript 5.6
+• Frontend: React 18.3, TypeScript 5.6, Vite 6
 • Animation: @rive-app/react-canvas 4.16.5
-• Build: Vite 6
-• CDN: GitHub raw content (dev)
+• Styling: Inline styles (no CSS framework)
+• CDN: GitHub raw content (dev), future Epic CDN (prod)
 
 ### What's Being Built:
 
-1. **Animation Polish**: Loading states, button feedback, animation queueing
-2. **Phase 2 - Accessories**: Hats, glasses, masks system
-3. **Phase 2 - Egg Hatching**: Character reveal animation
-4. **Production CDN**: Migration from GitHub to Epic's CDN
+1. Phase 2: Accessories system (hats, glasses, masks)
+2. Egg hatching animation
+3. Speech bubbles
+4. Production CDN integration
 
 ⸻
 
 ## 📋 Recommended Next Tasks
 
-### Task 1: Commit Animation System Changes
-
-**Files to commit:**
-- `public/buddy-template.riv` - Complete state machine with layers
-- `src/App.tsx` - Removed tap button
-- `src/components/BuddyCanvas.tsx` - Removed triggerTap from interface
-- `src/hooks/useBuddyRive.ts` - Removed triggerTap method
-- `src/types/buddy.ts` - Updated AnimationTrigger type
-- `src/utils/constants.ts` - Removed TAP trigger
-
-**Suggested commit message:**
-```bash
-feat: Complete Rive state machine with idle default and auto-blink
-
-- Configure BodyLayer with Entry→idle and proper return transitions
-- Set up BlinkLayer with automatic 2-5s blink cycle
-- Remove unused tap trigger from entire codebase
-- Fix wave and jump animations with Exit Time 100%
-- Update TypeScript types to match Rive triggers
-
-🤖 Generated with [Claude Code](https://claude.com/claude-code)
-
-Co-Authored-By: Claude Opus 4.5 <noreply@anthropic.com>
-```
-
-**Watch out for:** Make sure to exclude buddy-template.zip and buddy-template/ folder
-
-**Estimated effort:** 10 minutes
-
-### Task 2: Add Button Loading States
+### Task 1: Implement Accessories System
 
 **Files to modify:**
-- `src/App.tsx`
-- `src/hooks/useBuddyRive.ts` (add isAnimating state)
+
+- `src/utils/constants.ts` - Add accessories configuration
+- `src/hooks/useBuddyRive.ts` - Extend asset loader for accessories
+- `src/types/buddy.ts` - Add accessory interfaces
+- Create `src/components/AccessoryPicker.tsx`
 
 **Steps:**
-- Track animation state in useBuddyRive
-- Disable buttons during animations
-- Add visual feedback (opacity change or spinner)
-- Test rapid clicking doesn't break state
 
-**Estimated effort:** 45 minutes
+1. Design accessory layer system in Rive file
+2. Add accessory slots (hat, glasses, mask) as separate layers
+3. Extend CDN structure for `/accessories/hats/`, `/accessories/glasses/`
+4. Create UI component for accessory selection
+5. Modify asset loader to handle dynamic accessory loading
 
-### Task 3: Remove Debug Logging
+**Watch out for:**
+- Z-index layering in Rive (accessories must render above body parts)
+- Memory management with multiple accessories loaded
+- Ensure accessories align properly across all characters
+
+**Estimated effort:** 6-8 hours
+
+### Task 2: Add Egg Hatching Animation
 
 **Files to modify:**
-- `src/hooks/useBuddyRive.ts`
 
-**Lines to remove:**
-```typescript
-console.log(`Attempting to fire trigger: ${triggerName}`);
-console.log('No inputs found - rive not ready');
-console.log('Available inputs:', inputs.map((i: { name: string }) => i.name));
-console.log(`Firing trigger: ${triggerName}`);
-console.log(`Trigger '${triggerName}' not found or has no fire method`);
-```
+- `buddy-template.riv` - Add egg hatching animation
+- `src/components/BuddyLoader.tsx` - Show egg instead of spinner for first load
+- `src/utils/constants.ts` - Add egg-related triggers
 
-**Estimated effort:** 5 minutes
+**Steps:**
+
+1. Create egg crack animation in Rive
+2. Add `hatch` trigger to state machine
+3. Modify BuddyLoader to show egg on very first load
+4. Transition from egg → buddy reveal
+
+**Estimated effort:** 4 hours
 
 ⸻
 
@@ -160,43 +136,31 @@ console.log(`Trigger '${triggerName}' not found or has no fire method`);
 
 ### Established Patterns:
 
-1. **Two-Layer Architecture**: Separate layers for independent animation systems
-   - BodyLayer: Character movements (idle, wave, jump)
-   - BlinkLayer: Eye animations (continuous blinking)
-
-2. **Transition Requirements**:
-   - Always set Exit Time 100% for animation completion
-   - Use "Any State" for triggers that can fire anytime
-   - Entry must connect to a default state
-
-3. **forwardRef Pattern**: Clean API for parent-child communication
-   ```typescript
-   export interface BuddyCanvasRef {
-     triggerWave: () => void;
-     triggerJump: () => void;
-     triggerBlink: () => void;
-   }
-   ```
+1. **Asset Preloading**: Always preload character assets before mounting Rive to prevent pop-in
+2. **ForwardRef for Animations**: Use forwardRef pattern to expose animation methods from nested components
+3. **CDN Asset Loading**: Use assetLoader callback with Referenced assets, never embed
+4. **Memory Management**: Always call `image.unref()` after `setRenderImage()`
 
 ### Patterns Learned This Session:
 
-1. **Layer Renaming Strategy**: Don't delete and recreate - rename and reconfigure existing layers
-2. **Fixed Duration for Timing**: Use timeline length instead of random delays in Rive
-3. **Transition Debugging**: Check both trigger existence AND transition condition
+1. **Loading State Delays**: Add 200-300ms delay before showing loading indicators to prevent flicker
+2. **Rive onLoad Timing**: Use Rive's `onLoad` callback for ready state, not manual asset counting
+3. **Transparent Backgrounds**: Set Rive artboard fill to transparent for seamless integration
 
 ### Code Standards:
 
-- Remove all console.log statements before commit
-- Use TypeScript strict mode
-- Keep trigger names synchronized between Rive and code
-- Document state machine architecture with diagrams
+- TypeScript strict mode enabled
+- Functional components with hooks only
+- Inline styles for simple components
+- Constants in SCREAMING_SNAKE_CASE
+- All magic numbers as named constants
 
 ### Testing Requirements:
 
-- All animations must return to idle
-- Rapid clicking shouldn't break state machine
-- Character switching maintains animation functionality
-- No infinite loops or console errors
+- Test on throttled network (Slow 4G) to verify loading states
+- Verify no memory leaks with Chrome DevTools
+- Test all character switches
+- Ensure animations return to idle state
 
 ⸻
 
@@ -204,22 +168,25 @@ console.log(`Trigger '${triggerName}' not found or has no fire method`);
 
 ### Core Implementation:
 
-1. **src/hooks/useBuddyRive.ts** - Main animation hook with trigger logic
-2. **src/components/BuddyCanvas.tsx** - forwardRef wrapper exposing animation API
-3. **public/buddy-template.riv** - Rive file with complete state machine
-4. **src/utils/constants.ts** - Animation trigger names (WAVE, JUMP, BLINK)
+1. **src/hooks/useBuddyRive.ts** - Main hook handling CDN loading and animations
+2. **src/components/BuddyLoader.tsx** - Preloader wrapper with spinner logic
+3. **src/components/BuddyCanvas.tsx** - Core Rive canvas with forwardRef
+4. **src/components/EventsDemo/** - Event simulation system for testing
+5. **src/utils/assetLoader.ts** - CDN URL building and asset fetching
+6. **src/utils/constants.ts** - All configuration constants
 
 ### Documentation:
 
-1. **CLAUDE.md** - Project overview (needs tap trigger removal)
-2. **/Users/travisgregory/.claude/plans/dazzling-sauteeing-muffin.md** - Detailed state machine plan
-3. **docs/RIVE_EDITOR_SETUP.md** - Rive configuration guide (needs layer pattern update)
+1. **CLAUDE.md** - Project memory and conventions
+2. **docs/TECHNICAL_SPEC.md** - Full technical architecture
+3. **docs/RIVE_EDITOR_SETUP.md** - Rive configuration guide
+4. **docs/AGENT_CONTEXT.md** - Quick reference for AI agents
 
 ### Configuration:
 
-1. **package.json** - Dependencies (@rive-app/react-canvas 4.16.5)
-2. **vite.config.ts** - Build configuration
-3. **tsconfig.json** - TypeScript strict mode settings
+1. **public/buddy-template.riv** - Rive file with state machine
+2. **package.json** - Dependencies and scripts
+3. **vite.config.ts** - Build configuration
 
 ⸻
 
@@ -227,30 +194,16 @@ console.log(`Trigger '${triggerName}' not found or has no fire method`);
 
 ### Core Workflows:
 
-• **Default State**: Buddy always returns to idle animation when not performing actions
-• **Parallel Animations**: Blinking continues while other animations play (layer independence)
-• **User Interaction**: Click buddy or use buttons to trigger animations
-• **Character Switching**: Maintains animation state across character changes
+• **Asset Loading**: Preload → Cache → Mount → Fade In
+• **Animation Flow**: Trigger → Play → Return to Idle
+• **Character Switching**: Unmount → Clear Cache → Preload New → Mount
+• **Event Simulation**: App Event → Map to Input/Trigger → Buddy Reacts
 
-### State Machine Structure:
+### Data Models:
 
-```
-BuddyStateMachine
-├── BodyLayer (renamed from "Blink")
-│   ├── Entry → idle
-│   ├── Any State → wave (trigger: wave) → idle (Exit: 100%)
-│   └── Any State → jump (trigger: jump) → idle (Exit: 100%)
-│
-└── BlinkLayer (renamed from "Base")
-    ├── Entry → eyes_open
-    └── eyes_open ↔ blink (loop with ~3-4s delay)
-```
-
-### Animation Triggers:
-
-• **wave**: Friendly greeting animation
-• **jump**: Excited bounce animation
-• **blink**: Manual blink (auto-blink runs independently)
+• **BuddyCharacter**: id, name, folderName (CDN path)
+• **BuddyState**: isLoaded, isPlaying, currentAnimation, assetsLoaded
+• **EventMapping**: eventId, name, category, inputs, description
 
 ⸻
 
@@ -258,27 +211,27 @@ BuddyStateMachine
 
 ### Open Issues:
 
-1. **Animation Overlap**: No queueing system - animations can interrupt each other
-2. **Button Feedback**: No visual indication when animation is playing
-3. **Debug Logs**: Console logging still active in production code
+1. **Memory Usage**: Cached assets (3-10MB per character) aren't cleared on unmount
+2. **Type Safety**: Rive types require casting for asset loader
+3. **No Error Recovery**: Failed asset loads show blank - need fallback
 
 ### Issues Discovered This Session:
 
-1. **MCP Connection Timeout**: Rive Editor MCP failed to connect on localhost:9791
-2. **Transition Condition Bug**: Forgetting to set trigger condition makes buttons non-functional
-3. **Exit Time Critical**: Missing Exit Time causes infinite transition loops
+1. **Asset Count Mismatch**: BODY_PARTS constant doesn't always match .riv file contents
+2. **Dark Background**: Rive artboards have default dark fill that needs manual removal
+3. **Spinner Flicker**: Loading indicators flash briefly on fast networks without delay
 
 ### Technical Debt:
 
-1. **Animation State Tracking**: Need to know when animations complete
-2. **Error Boundaries**: No error handling for failed asset loads
-3. **Performance Monitoring**: No metrics for animation performance
+1. **Inline Styles**: Should extract to CSS modules or styled-components
+2. **No Tests**: Need unit tests for hooks and integration tests for animations
+3. **Manual Asset Management**: Should automate asset list generation from .riv file
 
 ### Blockers/Constraints:
 
-1. Rive doesn't support native random delays (must use fixed timelines)
-2. Manual blink may conflict with auto-blink timing
-3. No animation priority system for interrupts
+1. All body part images must be exactly 500x500px
+2. Asset names in Rive must match CDN filenames exactly (case-sensitive)
+3. Can't use default `<Rive />` component due to custom asset loading
 
 ⸻
 
@@ -288,77 +241,80 @@ BuddyStateMachine
 # Install dependencies
 npm install
 
-# Start development servers
+# Start development server
 npm run dev          # Starts on http://localhost:5173
 
-# Testing
-npm run typecheck    # TypeScript validation
-npm run lint         # ESLint checks
+# Testing (no tests yet)
+npm test            # Will error - no tests configured
 
 # Code quality
-git status          # Check uncommitted changes
-git diff            # Review changes before commit
+npm run lint        # ESLint check
+npm run build       # TypeScript check + production build
 
-# Build
-npm run build       # Production build
-npm run preview     # Preview production build
-
-# Rive debugging
-# Open Rive Desktop App with buddy-template.riv
-# Check state machine inputs and transitions
+# Useful during development
+npx tsc --noEmit    # Type check without building
 ```
 
 ⸻
 
 ## 🎯 Success Criteria for Next Session
 
-• ✅ All animation code committed with clear message
-• ✅ Debug logging removed from production
-• ✅ Button loading states implemented
-• ✅ Documentation updated (CLAUDE.md, RIVE_EDITOR_SETUP.md)
-• ✅ Consider starting Phase 2 (accessories or egg hatching)
-• ✅ No console errors or warnings
-• ✅ Animations remain smooth across all characters
+• ✅ Accessories system designed in Rive file
+• ✅ At least 3 accessories (hat, glasses, mask) working
+• ✅ Accessories load from CDN like body parts
+• ✅ UI for selecting/equipping accessories
+• ✅ Accessories persist through character switches
+• ✅ All existing animations still work
+• ✅ No TypeScript errors
+• ✅ Documentation updated
 
 ⸻
 
 ## 💡 Pro Tips for Next Session
 
-1. **Test Edge Cases First** - Rapid clicking, character switching during animation
-2. **Use Plan Mode** - For complex features like accessories system
-3. **Check Layer Independence** - Ensure body and blink animations don't interfere
-4. **Version Control Rive File** - Binary changes are hard to track, document changes
-5. **Consider Animation Events** - Rive supports firing events when animations complete
-6. **Profile Performance** - Watch for memory leaks with Chrome DevTools
+1. **Check Rive artboard first** - Ensure transparent background is maintained
+2. **Test loading states** - Use Chrome DevTools Network throttling
+3. **Watch the console** - Asset loading logs help debug issues
+4. **Use the Events Demo** - Great for testing buddy reactions to new inputs
+5. **Preload pattern works** - Apply same pattern to accessories
+6. **250ms delay is golden** - Use for any new loading indicators
+7. **ForwardRef for control** - Maintain this pattern for new components
 
 ⸻
 
 ## 🚀 Quick Start for Next Session
 
 1. Read this handoff document completely
-2. **Review the state machine plan**: `/Users/travisgregory/.claude/plans/dazzling-sauteeing-muffin.md`
+2. **Review BuddyLoader implementation** - Accessories will follow similar pattern
 3. Check uncommitted changes: `git status`
-4. Run the app: `npm run dev`
-5. Test all animations work correctly
-6. Commit the changes with suggested message
-7. Start with Task 2: Button Loading States
+4. Review the Events Demo to understand input system
+5. Verify dev environment: `npm run dev`
+6. Open Rive editor to plan accessory layers
+7. Start with Task 1: Accessories System
 
 ⸻
 
 ## 📊 Session Metrics
 
-- Files modified: 6 (pending commit)
-- Files created: 1 (plan document)
-- Features completed: 4 (idle default, auto-blink, wave fix, jump fix)
-- Lines of code: +4/-11 (net reduction from tap removal)
-- Time elapsed: ~3 hours
-- Edge cases discovered: 3 (infinite loop, missing condition, duplicate states)
-- Docs created: 1 (detailed plan with ASCII diagrams)
+- Files modified: 6
+- Files created: 9
+- Tests added: 0 (still needed)
+- Lines of code: ~+500
+- Time elapsed: ~4 hours
+- Edge cases discovered: 3
+- Docs updated: 2
 
 ---
 
 **Ready to continue building!** 🎉
 
-The animation system is now complete and functioning beautifully. All core animations work, the state machine is properly architected, and the codebase is cleaner without the unused tap trigger. Phase 2 features await!
+### Key Accomplishments:
+- ✅ Eliminated asset "pop-in" with preloader
+- ✅ Added comprehensive Events Demo for testing
+- ✅ Fixed loading spinner UX with intelligent delay
+- ✅ Documented Rive background transparency solution
 
-This handoff was generated automatically. The retrospective insights have been captured for future reference.
+### Critical Learning:
+The 250ms spinner delay dramatically improves perceived performance. Apply this pattern to all future loading states!
+
+This handoff was generated automatically. Review and adjust as needed before starting the next session.
