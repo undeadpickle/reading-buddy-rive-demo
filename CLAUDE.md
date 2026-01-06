@@ -77,7 +77,7 @@ const assetLoader = async (asset: ImageAsset, bytes: Uint8Array) => {
 
 ```typescript
 // Development (GitHub)
-CDN_BASE_URL = 'https://raw.githubusercontent.com/undeadpickle/Rive/main/buddies'
+CDN_BASE_URL = 'https://raw.githubusercontent.com/undeadpickle/reading-buddy-rive-demo/main/buddies'
 
 // Production (future)
 CDN_BASE_URL = 'https://cdn.getepic.com/buddies'
@@ -156,4 +156,4 @@ For detailed context, see:
 
 ## GitHub
 
-**Repository:** https://github.com/undeadpickle/Rive.git
+**Repository:** https://github.com/undeadpickle/reading-buddy-rive-demo.git

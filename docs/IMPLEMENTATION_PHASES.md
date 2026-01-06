@@ -35,7 +35,7 @@
 
 | Task | Status | Notes |
 |------|--------|-------|
-| Set up GitHub repo with buddy assets | ⬜ Not Started | `undeadpickle/Rive` |
+| Set up GitHub repo with buddy assets | ⬜ Not Started | `undeadpickle/reading-buddy-rive-demo` |
 | Configure Rive file with Referenced assets | ⬜ Not Started | All body parts |
 | Create React test harness | ⬜ Not Started | Vite + React 18 |
 | Implement `useBuddyRive` hook | ⬜ Not Started | Asset loader callback |
@@ -176,7 +176,7 @@
 // Toggle between dev and prod CDN
 const CDN_BASE = process.env.NODE_ENV === 'production'
   ? 'https://cdn.getepic.com/buddies'
-  : 'https://raw.githubusercontent.com/undeadpickle/Rive/main/buddies';
+  : 'https://raw.githubusercontent.com/undeadpickle/reading-buddy-rive-demo/main/buddies';
 ```
 
 #### Performance Requirements

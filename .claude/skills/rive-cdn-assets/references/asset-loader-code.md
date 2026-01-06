@@ -45,7 +45,7 @@ export interface BuddyState {
 import type { BuddyCharacter } from '../types/buddy';
 
 // CDN Configuration
-export const CDN_BASE_URL = 'https://raw.githubusercontent.com/undeadpickle/Rive/main/buddies';
+export const CDN_BASE_URL = 'https://raw.githubusercontent.com/undeadpickle/reading-buddy-rive-demo/main/buddies';
 
 // Body parts loaded from CDN (must match Rive asset names exactly)
 export const BODY_PARTS = [

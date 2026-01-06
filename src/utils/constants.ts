@@ -2,7 +2,7 @@ import type { BuddyCharacter } from '../types/buddy';
 
 // CDN Configuration
 // DEV: Using GitHub raw content for testing
-export const CDN_BASE_URL = 'https://raw.githubusercontent.com/undeadpickle/Rive/main/buddies';
+export const CDN_BASE_URL = 'https://raw.githubusercontent.com/undeadpickle/reading-buddy-rive-demo/main/buddies';
 
 // PROD: Will use Epic's CDN
 // export const CDN_BASE_URL = 'https://cdn.getepic.com/buddies';

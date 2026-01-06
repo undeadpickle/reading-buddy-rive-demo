@@ -15,16 +15,16 @@ All buddy character assets are 500x500 PNG files with transparency. Each charact
 
 ### Development CDN (GitHub)
 
-**Repository:** https://github.com/undeadpickle/Rive.git
+**Repository:** https://github.com/undeadpickle/reading-buddy-rive-demo.git
 
 **Base URL:** 
 ```
-https://raw.githubusercontent.com/undeadpickle/Rive/main/buddies
+https://raw.githubusercontent.com/undeadpickle/reading-buddy-rive-demo/main/buddies
 ```
 
 **Full Asset URL Pattern:**
 ```
-https://raw.githubusercontent.com/undeadpickle/Rive/main/buddies/{character}/{partName}@{resolution}.png
+https://raw.githubusercontent.com/undeadpickle/reading-buddy-rive-demo/main/buddies/{character}/{partName}@{resolution}.png
 ```
 
 ### Production CDN (Epic) - Future
@@ -287,13 +287,13 @@ done
 
 ```
 # Orange Cat head @2x
-https://raw.githubusercontent.com/undeadpickle/Rive/main/buddies/CatdogOrange/head@2x.png
+https://raw.githubusercontent.com/undeadpickle/reading-buddy-rive-demo/main/buddies/CatdogOrange/head@2x.png
 
 # Gray Cat arm left @1x
-https://raw.githubusercontent.com/undeadpickle/Rive/main/buddies/CatdogGray/armLeft.png
+https://raw.githubusercontent.com/undeadpickle/reading-buddy-rive-demo/main/buddies/CatdogGray/armLeft.png
 
 # Purple Cat blink eye @3x
-https://raw.githubusercontent.com/undeadpickle/Rive/main/buddies/CatdogPurple/eyeBlinkRight@3x.png
+https://raw.githubusercontent.com/undeadpickle/reading-buddy-rive-demo/main/buddies/CatdogPurple/eyeBlinkRight@3x.png
 ```
 
 ### Testing URLs

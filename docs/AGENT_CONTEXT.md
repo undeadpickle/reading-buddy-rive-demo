@@ -37,7 +37,7 @@ Building a **React test harness** for Epic's **Reading Buddy** character animati
 | **Project Location** | `/Users/travisgregory/Projects/Rive` |
 | **Runtime** | React 18 (web) |
 | **Rive Runtime** | `@rive-app/react-canvas` |
-| **CDN (Dev)** | `https://raw.githubusercontent.com/undeadpickle/Rive/main/buddies` |
+| **CDN (Dev)** | `https://raw.githubusercontent.com/undeadpickle/reading-buddy-rive-demo/main/buddies` |
 | **State Machine** | `BuddyStateMachine` (BodyLayer + BlinkLayer) |
 | **Animation Triggers** | `wave`, `jump`, `blink` |
 | **Current Phase** | Phase 1 Complete - Ready for Phase 2 |
@@ -49,7 +49,7 @@ Building a **React test harness** for Epic's **Reading Buddy** character animati
 ### Rive Assets
 - ✅ Rive file with buddy rig and animations - exported to `public/buddy-template.riv`
 - ✅ Body part PNG assets (500x500) - uploaded to `buddies/` on GitHub
-- ✅ GitHub repo: `https://github.com/undeadpickle/Rive.git`
+- ✅ GitHub repo: `https://github.com/undeadpickle/reading-buddy-rive-demo.git`
 - ✅ Two-layer state machine: BodyLayer (movements) + BlinkLayer (eyes)
 
 ### React Implementation
@@ -204,7 +204,7 @@ legSeparator, tail, eyeLeft, eyeRight, eyeBlinkLeft, eyeBlinkRight
 ## CDN URL Pattern
 
 ```
-https://raw.githubusercontent.com/undeadpickle/Rive/main/buddies/{character}/{part}@{res}.png
+https://raw.githubusercontent.com/undeadpickle/reading-buddy-rive-demo/main/buddies/{character}/{part}@{res}.png
 
 Examples:
 .../buddies/CatdogOrange/head@2x.png
@@ -315,7 +315,7 @@ Config location: `~/.cursor/mcp.json`
 ## Contact
 
 **Project Owner:** Travis Gregory  
-**GitHub Repo:** https://github.com/undeadpickle/Rive.git
+**GitHub Repo:** https://github.com/undeadpickle/reading-buddy-rive-demo.git
 
 ---
 

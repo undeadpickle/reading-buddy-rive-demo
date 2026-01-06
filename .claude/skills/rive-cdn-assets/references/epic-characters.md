@@ -17,7 +17,7 @@ CDN structure, body parts, and character configuration for Epic Reading Buddies.
 ### Development (GitHub Raw)
 
 ```
-https://raw.githubusercontent.com/undeadpickle/Rive/main/buddies/{character}/{part}.png
+https://raw.githubusercontent.com/undeadpickle/reading-buddy-rive-demo/main/buddies/{character}/{part}.png
 ```
 
 ### Production (Epic CDN)
@@ -30,13 +30,13 @@ https://cdn.getepic.com/buddies/{character}/{part}.png
 
 ```
 # Orange Cat head
-https://raw.githubusercontent.com/undeadpickle/Rive/main/buddies/CatdogOrange/head.png
+https://raw.githubusercontent.com/undeadpickle/reading-buddy-rive-demo/main/buddies/CatdogOrange/head.png
 
 # Gray Cat left arm @2x
-https://raw.githubusercontent.com/undeadpickle/Rive/main/buddies/CatdogGray/armLeft@2x.png
+https://raw.githubusercontent.com/undeadpickle/reading-buddy-rive-demo/main/buddies/CatdogGray/armLeft@2x.png
 
 # Purple Cat blink eye @3x
-https://raw.githubusercontent.com/undeadpickle/Rive/main/buddies/CatdogPurple/eyeBlinkRight@3x.png
+https://raw.githubusercontent.com/undeadpickle/reading-buddy-rive-demo/main/buddies/CatdogPurple/eyeBlinkRight@3x.png
 ```
 
 ---

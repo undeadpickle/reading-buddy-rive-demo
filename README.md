@@ -50,7 +50,7 @@ This folder contains comprehensive documentation for the Reading Buddy Rive migr
 
 ## Key Links
 
-- **GitHub Repo:** https://github.com/undeadpickle/Rive.git
+- **GitHub Repo:** https://github.com/undeadpickle/reading-buddy-rive-demo.git
 - **Rive Documentation:** https://rive.app/docs
 - **Rive Asset Loading:** https://rive.app/docs/runtimes/loading-assets
 
