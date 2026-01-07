@@ -46,10 +46,30 @@ The current AE/Lottie workflow presents several scaling challenges:
 
 ## Addressing "Why Change?"
 
-- **Scalability:** The current system does not scale; our roadmap will double the current 20-50 states.
-- **Incremental Migration:** Both runtimes can coexist; we can build new features in Rive while porting old ones over time.
-- **Industry Standard:** Rive is used by Google, Duolingo, Netflix, and Notion.
-- **Managed Risk:** While there is a ramp-up period for designers to master State Machines, the long-term gains in handoff efficiency outweigh the initial learning curve.
+### Rive Unlocks More Future Buddy Features
+
+#### Voice Over Audio
+
+- Different voices for different buddy types
+- Voice-acted or AI generated (TBD)
+- Voice can convey more personality
+
+#### Read-to-Me Buddy
+
+- **AI Narration:** Buddy reads books aloud using unique voice personas
+- **Take-Turns Mode:** Buddy "listens" (animation state) while the child reads, then takes its turn
+
+#### Expanded Content
+
+- More unlockable Buddies
+- More Accessories
+
+#### Interactivity
+
+- **Touch/Interact Reactions:** Buddy responds to touch interactions
+- **Quests from Buddy:** Buddy sends child letters via Mailbox; some letters can be quests or challenges
+- **Fully Interactive Agent:** Real-time blending between "Speaking" and "Laughing" during AI-driven jokes
+- **Dynamic Costumes:** Attach props (e.g., Space Helmet) to specific "Bone Anchors" without re-rendering character animations
 
 ---
 
