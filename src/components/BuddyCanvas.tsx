@@ -25,7 +25,7 @@ export const BuddyCanvas = forwardRef<BuddyCanvasRef, BuddyCanvasProps>(
     { character, width = 300, height = 300, assetCache, onAllAssetsLoaded, onTap, onLoad, onError },
     ref
   ) {
-    const { RiveComponent, state, triggerWave, triggerJump, triggerBlink, setInput } =
+    const { RiveComponent, triggerWave, triggerJump, triggerBlink, setInput } =
       useBuddyRive({
         character,
         resolution: '2x',
