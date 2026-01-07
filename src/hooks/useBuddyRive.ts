@@ -108,7 +108,7 @@ export function useBuddyRive({
   // Initialize Rive
   // Note: assetLoader is typed as async but Rive runtime handles it correctly
   const { rive, RiveComponent } = useRive({
-    src: '/buddy-template.riv',
+    src: `${import.meta.env.BASE_URL}buddy-template.riv`,
     stateMachines: STATE_MACHINE_NAME,
     autoplay,
     assetLoader: assetLoader as unknown as (asset: FileAsset, bytes: Uint8Array) => boolean,
