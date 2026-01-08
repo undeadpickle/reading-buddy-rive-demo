@@ -3,6 +3,9 @@ import { useBuddyRive } from '../hooks/useBuddyRive';
 import type { BuddyCharacter } from '../types/buddy';
 
 interface BuddyCanvasProps {
+  src?: string;
+  cdnSubfolder?: string;
+  resolution?: '1x' | '2x' | '3x';
   character: BuddyCharacter;
   width?: number;
   height?: number;
@@ -22,13 +25,15 @@ export interface BuddyCanvasRef {
 
 export const BuddyCanvas = forwardRef<BuddyCanvasRef, BuddyCanvasProps>(
   function BuddyCanvas(
-    { character, width = 300, height = 300, assetCache, onAllAssetsLoaded, onTap, onLoad, onError },
+    { src, cdnSubfolder, resolution = '2x', character, width = 300, height = 300, assetCache, onAllAssetsLoaded, onTap, onLoad, onError },
     ref
   ) {
     const { RiveComponent, triggerWave, triggerJump, triggerBlink, setInput } =
       useBuddyRive({
+        src,
+        cdnSubfolder,
         character,
-        resolution: '2x',
+        resolution,
         assetCache,
         onAllAssetsLoaded,
         onLoad,

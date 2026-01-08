@@ -130,6 +130,8 @@ legSeparator, tail, eyeLeft, eyeRight, eyeBlinkLeft, eyeBlinkRight
 - Don't hardcode CDN URLs (use constants)
 - Don't forget `image.unref()` after loading
 - Don't assume input names - verify in Rive editor
+- Don't forget transitions FROM animation states back TO Idle (Wave → Idle, Jump → Idle)
+- Don't forget Exit Time 100% on those transitions (or animation plays but character freezes)
 
 ## Testing the App
 

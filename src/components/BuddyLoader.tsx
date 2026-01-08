@@ -8,6 +8,9 @@ import type { BuddyCharacter } from '../types/buddy';
 const SPINNER_DELAY_MS = 250;
 
 interface BuddyLoaderProps {
+  src?: string;
+  cdnSubfolder?: string;
+  resolution?: '1x' | '2x' | '3x';
   character: BuddyCharacter;
   width?: number;
   height?: number;
@@ -25,7 +28,7 @@ export interface BuddyLoaderRef {
 
 export const BuddyLoader = forwardRef<BuddyLoaderRef, BuddyLoaderProps>(
   function BuddyLoader(
-    { character, width = 300, height = 300, onTap, onLoad, onError },
+    { src, cdnSubfolder = 'buddies', resolution = '2x', character, width = 300, height = 300, onTap, onLoad, onError },
     ref
   ) {
     const [assetCache, setAssetCache] = useState<Map<string, Uint8Array> | null>(null);
@@ -58,7 +61,7 @@ export const BuddyLoader = forwardRef<BuddyLoaderRef, BuddyLoaderProps>(
         setShowSpinner(true);
       }, SPINNER_DELAY_MS);
 
-      preloadCharacterAssets(character.folderName, '2x')
+      preloadCharacterAssets(cdnSubfolder, character.folderName, resolution)
         .then((cache) => {
           // Clear spinner timeout if loading finished fast
           if (spinnerTimeoutRef.current) {
@@ -78,7 +81,7 @@ export const BuddyLoader = forwardRef<BuddyLoaderRef, BuddyLoaderProps>(
           clearTimeout(spinnerTimeoutRef.current);
         }
       };
-    }, [character.folderName, onError]);
+    }, [cdnSubfolder, character.folderName, resolution, onError]);
 
     // Show spinner while preloading (only after delay threshold)
     if (!assetCache) {
@@ -101,6 +104,9 @@ export const BuddyLoader = forwardRef<BuddyLoaderRef, BuddyLoaderProps>(
       >
         <BuddyCanvas
           ref={buddyRef}
+          src={src}
+          cdnSubfolder={cdnSubfolder}
+          resolution={resolution}
           character={character}
           width={width}
           height={height}

@@ -2,10 +2,14 @@ import type { BuddyCharacter } from '../types/buddy';
 
 // CDN Configuration
 // DEV: Using GitHub raw content for testing
-export const CDN_BASE_URL = 'https://raw.githubusercontent.com/undeadpickle/reading-buddy-rive-demo/main/buddies';
+// NOTE: Base URL does NOT include subfolder - that's passed as a parameter to support different asset paths
+export const CDN_BASE_URL = 'https://raw.githubusercontent.com/undeadpickle/reading-buddy-rive-demo/main';
 
 // PROD: Will use Epic's CDN
-// export const CDN_BASE_URL = 'https://cdn.getepic.com/buddies';
+// export const CDN_BASE_URL = 'https://cdn.getepic.com';
+
+// Default CDN subfolder for original assets
+export const DEFAULT_CDN_SUBFOLDER = 'buddies';
 
 // Body parts that need to be loaded from CDN
 export const BODY_PARTS = [

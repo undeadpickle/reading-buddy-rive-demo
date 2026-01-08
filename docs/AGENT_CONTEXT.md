@@ -298,7 +298,8 @@ Config location: `~/.cursor/mcp.json`
 - ❌ Don't forget to call `image.unref()` after setting render image
 - ❌ Don't hardcode CDN URLs (use constants)
 - ❌ Don't assume state machine input names - verify in Rive editor
-- ❌ Don't forget Exit Time 100% on transitions (prevents infinite loops)
+- ❌ Don't forget Exit Time 100% on transitions back to Idle (animation will play but character freezes forever)
+- ❌ Don't forget to add transitions FROM animation states TO Idle (Wave → Idle, Jump → Idle)
 - ❌ Don't put unrelated animations in the same layer (use separate layers)
 
 ---

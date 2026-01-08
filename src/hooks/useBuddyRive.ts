@@ -2,10 +2,12 @@ import { useCallback, useState } from 'react';
 import { useRive, decodeImage } from '@rive-app/react-canvas';
 import type { FileAsset, ImageAsset } from '@rive-app/react-canvas';
 import { getAssetUrl, isBodyPart, fetchImageBytes } from '../utils/assetLoader';
-import { STATE_MACHINE_NAME, TRIGGERS, BODY_PARTS } from '../utils/constants';
+import { STATE_MACHINE_NAME, TRIGGERS, BODY_PARTS, DEFAULT_CDN_SUBFOLDER } from '../utils/constants';
 import type { BuddyCharacter, BuddyState } from '../types/buddy';
 
 interface UseBuddyRiveOptions {
+  src?: string;              // Path to .riv file
+  cdnSubfolder?: string;     // 'buddies' or 'buddies_cropped_parts'
   character: BuddyCharacter;
   resolution?: '1x' | '2x' | '3x';
   autoplay?: boolean;
@@ -26,6 +28,8 @@ interface UseBuddyRiveReturn {
 }
 
 export function useBuddyRive({
+  src = `${import.meta.env.BASE_URL}buddy-template.riv`,
+  cdnSubfolder = DEFAULT_CDN_SUBFOLDER,
   character,
   resolution = '2x',
   autoplay = true,
@@ -67,7 +71,7 @@ export function useBuddyRive({
             imageBytes = assetCache.get(assetName)!;
             console.log(`Using cached asset: ${assetName}`);
           } else {
-            const url = getAssetUrl(character.folderName, assetName, resolution);
+            const url = getAssetUrl(cdnSubfolder, character.folderName, assetName, resolution);
             console.log(`Fetching asset: ${assetName} from ${url}`);
             imageBytes = await fetchImageBytes(url);
           }
@@ -102,13 +106,13 @@ export function useBuddyRive({
 
       return false; // Let runtime handle unknown assets
     },
-    [character.folderName, resolution, assetCache, onAllAssetsLoaded, onError]
+    [cdnSubfolder, character.folderName, resolution, assetCache, onAllAssetsLoaded, onError]
   );
 
   // Initialize Rive
   // Note: assetLoader is typed as async but Rive runtime handles it correctly
   const { rive, RiveComponent } = useRive({
-    src: `${import.meta.env.BASE_URL}buddy-template.riv`,
+    src,
     stateMachines: STATE_MACHINE_NAME,
     autoplay,
     assetLoader: assetLoader as unknown as (asset: FileAsset, bytes: Uint8Array) => boolean,

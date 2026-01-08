@@ -1,15 +1,20 @@
-import { CDN_BASE_URL, BODY_PARTS, type BodyPart } from './constants';
+import { CDN_BASE_URL, DEFAULT_CDN_SUBFOLDER, BODY_PARTS, type BodyPart } from './constants';
 
 /**
  * Builds the CDN URL for a specific body part
+ * @param cdnSubfolder - 'buddies' for original, 'buddies_cropped_parts' for cropped
+ * @param characterFolder - e.g., 'CatdogOrange'
+ * @param partName - e.g., 'head', 'torso'
+ * @param resolution - '1x' (no suffix), '2x' (@2x), '3x' (@3x)
  */
 export function getAssetUrl(
+  cdnSubfolder: string,
   characterFolder: string,
   partName: string,
-  _resolution: '1x' | '2x' | '3x' = '1x'
+  resolution: '1x' | '2x' | '3x' = '1x'
 ): string {
-  // Currently using single resolution assets (no @2x/@3x suffix)
-  return `${CDN_BASE_URL}/${characterFolder}/${partName}.png`;
+  const suffix = resolution === '1x' ? '' : `@${resolution}`;
+  return `${CDN_BASE_URL}/${cdnSubfolder}/${characterFolder}/${partName}${suffix}.png`;
 }
 
 /**
@@ -41,8 +46,12 @@ export async function fetchImageBytes(url: string): Promise<Uint8Array> {
 /**
  * Preloads all body parts for a character
  * Useful for caching before display
+ * @param cdnSubfolder - 'buddies' for original, 'buddies_cropped_parts' for cropped
+ * @param characterFolder - e.g., 'CatdogOrange'
+ * @param resolution - '1x', '2x', or '3x'
  */
 export async function preloadCharacterAssets(
+  cdnSubfolder: string = DEFAULT_CDN_SUBFOLDER,
   characterFolder: string,
   resolution: '1x' | '2x' | '3x' = '2x'
 ): Promise<Map<string, Uint8Array>> {
@@ -50,7 +59,7 @@ export async function preloadCharacterAssets(
 
   const loadPromises = BODY_PARTS.map(async (part) => {
     try {
-      const url = getAssetUrl(characterFolder, part, resolution);
+      const url = getAssetUrl(cdnSubfolder, characterFolder, part, resolution);
       const bytes = await fetchImageBytes(url);
       assets.set(part, bytes);
     } catch (error) {

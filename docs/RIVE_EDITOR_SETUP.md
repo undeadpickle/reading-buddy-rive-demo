@@ -277,6 +277,29 @@ Create a new trigger input called "jump" in the BuddyStateMachine
 2. **Check entry state** - Ensure state machine has an entry point
 3. **Check "Any State"** - For triggers, use "Any State" as transition source
 
+### Animation Plays But Doesn't Return to Idle
+
+**Symptom:** Trigger fires, animation plays once, then the character freezes (no more idle animation). Subsequent triggers may not work until the page is refreshed.
+
+**Cause:** Missing transition from the animation state back to Idle, or transition exists but lacks Exit Time.
+
+**Fix:**
+1. In the state machine, select the animation state (e.g., Wave, Jump)
+2. Create a transition from that state → Idle (if missing)
+3. Select the transition and set **Exit Time: 100%**
+4. Ensure Idle has **Loop: ON**
+
+**Visual check:** Your state machine graph should show arrows going FROM Wave/Jump TO Idle, not just arrows going TO Wave/Jump.
+
+```
+❌ Wrong (no return path):
+Any State → Wave (stuck here forever)
+
+✅ Correct (returns to idle):
+Any State → Wave → Idle (exit 100%)
+                    ↑ (loops)
+```
+
 ---
 
 ## Quick Reference: Inspector Panels
